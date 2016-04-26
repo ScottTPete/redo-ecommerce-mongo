@@ -9,6 +9,8 @@ var express = require('express'),
 app.use(bodyParser.json());
 app.use(cors());
 
+app.use(express.static(__dirname + '/public'))
+
 
 //Database configuration//
 var db = mongojs('ecommerceTwo', ['products']),
@@ -34,7 +36,7 @@ app.post('/api/products', function(req, res, next) {
 
 app.get('/api/products', function(req, res, next) {
 	var query = req.query //is an empty object if nothing passed in
-	console.log(query)
+
 	db.products.find(query, function(err, response) {  //find with an empty object returns entire collection
 		if(err) {
 			res.status(500).send(err)

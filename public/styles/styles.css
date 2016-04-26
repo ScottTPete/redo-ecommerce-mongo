@@ -1,0 +1,13 @@
+.adminTools {
+	display: flex;
+}
+
+.adminTools button {
+	margin-right: 5px;
+}
+.btn-off {
+	display: none;
+}
+.btn-on {
+	display: block;
+}

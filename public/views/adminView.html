@@ -1,0 +1,34 @@
+<div class="adminTools">
+	<!--ADD PRODUCT-->
+	<div class="addProductContainer">
+		<button ng-click="add = !add" ng-hide="add">Add A Product</button>
+		<button ng-click="add = !add" ng-show="add">Cancel</button>
+		<input ng-model="product.name" placeholder="Product name..." ng-show="add"> 
+		<input ng-model="product.price" placeholder="Product price..." ng-show="add">
+		<button ng-click="addProduct(product); add = !add" ng-show="add">Save Product</button>
+	</div>
+	<!--EDIT PRODUCTS-->
+	<button ng-click="showEditButton(); allowEditing = !allowEditing" ng-hide="allowEditing">Edit Products</button>
+	<button ng-click="exitEditing(); allowEditing = !allowEditing" ng-show="allowEditing">Done Editing</button>
+	<!--DELETE PRODUCTS-->
+	<button>Delete Products</button>
+	
+	
+</div>
+<div class="productContainer" ng-repeat="product in products">
+	<!--PRODUCT-->
+	<p>{{product.name}}</p>
+	<p>Price: ${{product.price}}</p>
+	<!--DELETE BUTTON-->
+	<button ng-click="deleteProduct(product._id); delete = !delete" ng-show="deleteButton">X</button>
+	
+	<!--EDIT OPTIONS-->
+	<div class="editOptions">
+		<button ng-show="product.showEdit" ng-click="product.show = true; product.showEdit = false">Edit</button>
+		<button ng-show="product.show" ng-click="product.show = !product.show; product.showEdit = true">Cancel</button>
+		<input ng-show="product.show" ng-model="updatedProduct.name" placeholder="Edit product name...">
+		<input ng-show="product.show" ng-model="updatedProduct.price" placeholder="Edit product price...">
+		<button ng-show="product.show" ng-click="editProduct(updatedProduct, product)">Save Product</button>
+	</div>
+	
+</div>
