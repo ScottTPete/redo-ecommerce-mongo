@@ -3,6 +3,9 @@ angular.module('ecommerceApp')
 	
 	$scope.getProducts = function() {
 		productsSvc.getProducts().then(function(response) {
+			console.log(response)
+
+			
 			return $scope.products = response;
 		})
 	};
@@ -11,21 +14,27 @@ angular.module('ecommerceApp')
 	
 	//////////////EDIT PRODUCTS/////////
 	$scope.editProduct = function(updatedProduct, product) {
+		console.log(product)
 		var productToEdit = product;
-		if(updatedProduct.name && updatedProduct.price && productToEdit._id) {
+		if(updatedProduct.title && updatedProduct.price && updatedProduct.description && productToEdit._id) {
 			productsSvc.editProduct(updatedProduct, productToEdit._id);
 			$scope.getProducts();
-			alert("Changed " + productToEdit.name + ' with a price of $' + productToEdit.price + ' to ' + updatedProduct.name + '  with a price of $' + updatedProduct.price + '!')
-		} else if(!updatedProduct.name && updatedProduct.price && productToEdit._id) {
-			updatedProduct.name = product.name;
+			alert("Changed " + productToEdit.title + ' with a price of $' + productToEdit.price + ' to ' + updatedProduct.title + ' with a price of $' + updatedProduct.price + '!')
+		} else if(!updatedProduct.title && updatedProduct.price && productToEdit._id) {
+			updatedProduct.title = productToEdit.title;
 			productsSvc.editProduct(updatedProduct, productToEdit._id);
 			$scope.getProducts();
-			alert("Changed price of " + product.name + " from $" + product.price + " to " + "$"  + updatedProduct.price + '!');
-		} else if(!updatedProduct.price && updatedProduct.name && productToEdit._id) {
-			updatedProduct.price = product.price;
+			alert("Changed price of " + productToEdit.title + " from $" + productToEdit.price + " to " + "$"  + updatedProduct.price + '!');
+		} else if(!updatedProduct.price && updatedProduct.title && productToEdit._id) {
+			updatedProduct.price = productToEdit.price;
 			productsSvc.editProduct(updatedProduct, productToEdit._id);
 			$scope.getProducts();
-			alert("Changed " + product.name + " to " + updatedProduct.name + '!');
+			alert("Changed " + productToEdit.title + " to " + updatedProduct.title + '!');
+		} else if(updatedProduct.description && !updatedProduct.title && !updatedProduct.price && productToEdit._id) {
+			updatedProduct.price = productToEdit.price;
+			productsSvc.editProduct(updatedProduct, productToEdit._id);
+			$scope.getProducts();
+			alert("Changed " + productToEdit.title + "'s description from " + productToEdit.description + " to "+ updatedProduct.description + '!');
 		} else {
 			alert("Make sure to enter a value to edit this product.")
 		}
@@ -35,15 +44,14 @@ angular.module('ecommerceApp')
 	
 	/////////////////////ADD PRODUCTS////////////////////////////////
 	$scope.addProduct = function(product) {
-		console.log(product)
 		$scope.add = false;
-		if(product && (product.name && product.price)) {
+		if(product.title && product.price && product.description) {
 			productsSvc.addProduct(product)
-			alert(product.name + ' with a price of $' + product.price + ' was added.');
+			alert(product.title + ' with a price of $' + product.price + ' and a description of ' + product.description +  ' was added.');
 			$scope.getProducts();
 			$scope.product = '';
 		} else {
-			alert("Product must have product name and price!");
+			alert("Product must have product name, description and price!");
 		}
 	}
 	/////////////////////////////////////////////////////////////|||||||

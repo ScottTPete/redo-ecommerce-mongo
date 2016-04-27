@@ -6,34 +6,37 @@
 	<div class="addProductContainer">
 		<button ng-click="addProductBtn = !addProductBtn; cancelAddBtn = !cancelAddBtn; addInput = !addInput; saveNewBtn = !saveNewBtn; deleteToggle = !deleteToggle" ng-hide="addProductBtn">Add A Product</button>
 		<button ng-click="addProductBtn = !addProductBtn; cancelAddBtn = !cancelAddBtn; addInput = !addInput; saveNewBtn = !saveNewBtn; deleteToggle = !deleteToggle" ng-show="cancelAddBtn">Cancel</button>
-		<input ng-model="product.name" placeholder="Product name..." ng-show="addInput"> 
-		<input ng-model="product.price" placeholder="Product price..." ng-show="addInput">
-		<button ng-click="addProduct(product); product = ''" ng-show="saveNewBtn">Save Product</button>
+		<input ng-model="newProduct.title" placeholder="Product name..." ng-show="addInput">
+		<input ng-model="newProduct.description" placeholder="Product description..." ng-show="addInput">
+		<input ng-model="newProduct.price" placeholder="Product price..." ng-show="addInput">
+		<button ng-click="addProduct(newProduct); newProduct = ''" ng-show="saveNewBtn">Save Product</button>
 	</div>
 	
 	<!--DELETE PRODUCTS-->
 	<button ng-click="deleteToggle = !deleteToggle; doneDeleting = !doneDeleting; deleteButton = !deleteButton; openEditOptions = !openEditOptions" ng-hide="deleteToggle">Delete Products</button>
-	<button ng-show="doneDeleting" ng-click="deleteToggle = !deleteToggle; deleteButton = !deleteButton; doneDeleting = !doneDeleting; openEditOptions = !openEditOptions ">Done Deleting</button>
+	<button ng-show="doneDeleting" ng-click="deleteToggle = !deleteToggle; deleteButton = !deleteButton; doneDeleting = !doneDeleting; openEditOptions = !openEditOptions">Done Deleting</button>
 	
-	<input placeholder="Search for product..." ng-model="searchProducts">
-	
+	<!--SEARCH PRODUCTS-->
+	<input placeholder="Search for product..." ng-model="product.title">
 	
 </div>
 
-<div class="productContainer" ng-repeat="product in products">
+<div class="productContainer" ng-repeat="product in products | filter: product.title track by $index">
 	<!--PRODUCT-->
-	<p>{{product.name}}</p>
-	<p>Price: {{product.price | currency}}</p>
+	<li>{{product.title}}</li>
+	<input ng-show="editOption" ng-model="updatedProduct.title" placeholder="Edit product name...">
+	<li>{{product.description}}</li>
+	<input ng-show="editOption" ng-model="updatedProduct.description" placeholder="Edit product description...">
+	<li>Price: {{product.price | currency}}</li>
+	<input ng-show="editOption" ng-model="updatedProduct.price" placeholder="Edit product price...">
 	<!--DELETE BUTTON-->
 	<button ng-click="deleteProduct(product)" ng-show="deleteButton">X</button>
 	
 	<!--EDIT OPTIONS-->
-	<div class="editOptions">
-		<button ng-hide="openEditOptions" ng-click="openEditOptions= !openEditOptions; saveEditButton = !saveEditButton; editOption = !editOption ">Edit</button>
-		<button ng-show="editOption" ng-click="openEditOptions = ! openEditOptions; editOption =! editOption; saveEditButton = !saveEditButton">Cancel</button>
-		<input ng-show="editOption" ng-model="updatedProduct.name" placeholder="Edit product name...">
-		<input ng-show="editOption" ng-model="updatedProduct.price" placeholder="Edit product price...">
-		<button ng-show="saveEditButton" ng-click="editProduct(updatedProduct, product); updatedProduct = ''">Save</button>
-	</div>
+	<button ng-hide="openEditOptions" ng-click="openEditOptions= !openEditOptions; saveEditButton = !saveEditButton; editOption = !editOption ">Edit</button>
+	<br>
+	<button ng-show="editOption" ng-click="openEditOptions = ! openEditOptions; editOption =! editOption; saveEditButton = !saveEditButton">Cancel</button>
+	<button ng-show="saveEditButton" ng-click="editProduct(updatedProduct, product); updatedProduct = ''">Save</button>
+	
 	
 </div>
