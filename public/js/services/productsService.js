@@ -17,7 +17,7 @@ angular.module('ecommerceApp')
 				return $http.put(baseUrl + '/api/products/' + id, product)
 			},
 			deleteProduct: function (id) {
-				return $http.delete(baseUrl + '/api/products/' + id)
+				return $http.delete(baseUrl + '/api/products/' + id, id)
 			}
 		}
 	

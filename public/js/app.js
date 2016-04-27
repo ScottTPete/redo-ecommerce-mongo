@@ -16,11 +16,11 @@ angular.module('ecommerceApp', ['ui.router'])
 				url: '/admin',
 				templateUrl: '../views/adminView.html',
 				controller: 'adminCtrl',
-				resolve: {
+				/*resolve: {
 					productsRef: function(productsSvc) {
 						return productsSvc.getProducts();
 					},
-				}
+				}*/
 			})
 		
 		$urlRouterProvider.otherwise('/');
